@@ -1,0 +1,19 @@
+{% extends "dsgovbr/base.html" %}
+{% block title %}Sucesso - Sandbox{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-sm-12">
+    <div class="br-card text-center" style="border: 1px solid #ccc; border-radius: 4px; padding: 48px;">
+      <div class="card-content">
+        <i class="fas fa-check-circle fa-5x text-success mb-4"></i>
+        <h2>Solicitação Recebida com Sucesso!</h2>
+        <p class="lead">Os seus dados de teste foram gravados com sucesso no banco de dados.</p>
+        <div class="mt-4">
+          <a href="{% url 'public_forms:demo' %}" class="br-button primary mr-2">Criar Nova Solicitação</a>
+          <a href="/" class="br-button secondary">Voltar ao Início</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

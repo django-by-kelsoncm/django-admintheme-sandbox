@@ -1,0 +1,96 @@
+{% extends "admin/base_site.html" %}
+
+{% load i18n admin_urls static admin_list dsgovbr_admin_list %}
+
+{% block title %}
+    {% if cl.formset and cl.formset.errors %}{% translate "Error:" %}{% endif %}
+    {{ block.super }}
+{% endblock title %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    {% if cl.formset or action_form %}
+        <script src="{% url 'admin:jsi18n' %}"></script>
+    {% endif %}
+
+    {{ media.css }}
+
+    {% if not actions_on_top and not actions_on_bottom %}
+        <style>
+          #changelist table thead th:first-child {width: inherit}
+        </style>
+    {% endif %}
+    {% if media %}{{ media }}{% endif %}
+{% endblock extrastyle %}
+
+{% block extrahead %}
+    {{ block.super }}
+
+    {{ media.js }}
+
+    <script src="{% static 'admin/js/filters.js' %}" defer></script>
+{% endblock extrahead %}
+
+{% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} change-list{% endblock bodyclass %}
+
+{% block coltype %}{% endblock coltype %}
+
+{% block content %}
+
+    <!-- #changelist -->
+        <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
+            <!-- .changelist-form-container -->
+                <div class="changelist-form-container">
+                    {% block date_hierarchy %}
+                        {% if cl.date_hierarchy %}{% date_hierarchy cl %}{% endif %}
+                    {% endblock date_hierarchy %}
+                </div>
+            <!-- /.changelist-form-container -->
+        </div>
+    <!-- /#changelist -->
+
+    <!-- #content-main -->
+        <div id="content-main">
+            {% if cl.formset and cl.formset.errors %}
+                <p class="errornote">
+                    {% blocktranslate count counter=cl.formset.total_error_count %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktranslate %}
+                </p>
+                {{ cl.formset.non_form_errors }}
+            {% endif %}
+
+            <!-- #changelist-->
+                <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
+
+                    <!-- .changelist-form-container -->
+                        <div class="changelist-form-container">
+
+                            <form id="changelist-form" method="get"{% if cl.formset and cl.formset.is_multipart %} enctype="multipart/form-data"{% endif %} novalidate>
+                                {% comment %} {% csrf_token %} {% endcomment %}
+                                {% block result_content %}
+                                    {% if action_form and actions_on_top and cl.show_admin_actions %}
+                                        {% admin_actions %}
+                                    {% endif %}
+
+                                    <div class="br-table" data-search="data-search" data-selection="data-selection" data-collapse="data-collapse" data-random="data-random">
+                                        <!-- .table-header -->
+                                            {% include "admin/change_list_header.html" %}
+                                        <!-- /.table-header -->
+
+                                        <!-- .result_list -->
+                                            {% dsgovbr_result_list cl %}
+                                        <!-- /.result_list -->
+
+                                        <!-- .table-footer -->
+                                            {% include "admin/change_list_footer.html" %}
+                                        <!-- /.table-footer -->
+                                    </div>
+                                {% endblock result_content %}
+                            </form>
+                        </div>
+                    <!-- /.changelist-form-container -->
+                </div>
+            <!-- /#changelist-->
+            </div>
+    <!-- /#content-main -->
+
+{% endblock content %}

@@ -1,0 +1,9 @@
+{% load i18n admin_urls %}
+
+{% block object-tools-items %}
+    {% for action in object_tool_actions %}
+        <a href="{% url action.admin_url_name %}" class="br-item {{ action.css_class }}">
+            {{ action.label }}
+        </a>
+    {% endfor %}
+{% endblock object-tools-items %}

@@ -1,0 +1,104 @@
+{% extends "dsgovbr/base.html" %}
+
+{% block title %}UI Showcase - Componentes GovBR{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-sm-12 mb-4">
+    <h2>Showcase de Componentes UI (GovBR Design System)</h2>
+    <p class="lead">Esta página renderiza componentes puros para validar que o build do SCSS e do JS do tema estão aplicando o design perfeitamente fora do ambiente do Django Admin.</p>
+  </div>
+
+  <!-- Botões -->
+  <div class="col-md-6 mb-4">
+    <div class="br-card" style="border: 1px solid #ccc; border-radius: 4px; padding: 16px;">
+      <div class="card-header"><h3 class="m-0">Botões</h3></div>
+      <div class="card-body">
+        <div class="d-flex flex-wrap" style="gap: 8px;">
+          <button class="br-button primary" type="button">Primário</button>
+          <button class="br-button secondary" type="button">Secundário</button>
+          <button class="br-button success" type="button">Sucesso</button>
+          <button class="br-button danger" type="button">Perigo</button>
+          <button class="br-button warning" type="button">Alerta</button>
+          <button class="br-button info" type="button">Info</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tags / Badges -->
+  <div class="col-md-6 mb-4">
+    <div class="br-card" style="border: 1px solid #ccc; border-radius: 4px; padding: 16px;">
+      <div class="card-header"><h3 class="m-0">Tags / Badges</h3></div>
+      <div class="card-body">
+        <div class="d-flex flex-wrap" style="gap: 8px;">
+          <span class="br-tag">Padrão</span>
+          <span class="br-tag success">Sucesso</span>
+          <span class="br-tag danger">Perigo</span>
+          <span class="br-tag warning">Alerta</span>
+          <span class="br-tag info">Info</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Alertas / Mensagens -->
+  <div class="col-sm-12 mb-4">
+    <div class="br-card" style="border: 1px solid #ccc; border-radius: 4px; padding: 16px;">
+      <div class="card-header"><h3 class="m-0">Mensagens de Feedback (Alerts)</h3></div>
+      <div class="card-body">
+        <div class="br-message success mb-3" role="alert">
+          <div class="icon"><i class="fas fa-check-circle"></i></div>
+          <div class="content"><strong>Sucesso!</strong> Operação realizada com êxito.</div>
+        </div>
+        <div class="br-message danger mb-3" role="alert">
+          <div class="icon"><i class="fas fa-exclamation-circle"></i></div>
+          <div class="content"><strong>Erro!</strong> Houve um erro crítico ao processar os dados.</div>
+        </div>
+        <div class="br-message warning mb-3" role="alert">
+          <div class="icon"><i class="fas fa-exclamation-triangle"></i></div>
+          <div class="content"><strong>Atenção!</strong> Verifique os dados inseridos.</div>
+        </div>
+        <div class="br-message info" role="alert">
+          <div class="icon"><i class="fas fa-info-circle"></i></div>
+          <div class="content"><strong>Informação!</strong> Esta é uma notificação do sistema.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cards -->
+  <div class="col-md-6 mb-4">
+    <div class="br-card" style="border: 1px solid #ccc; border-radius: 4px; padding: 16px;">
+      <div class="card-header">
+        <div class="title">Título do Card</div>
+      </div>
+      <div class="card-body">
+        <p>Conteúdo interno de demonstração para verificar contrastes de colapso de texto.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Inputs Puros -->
+  <div class="col-md-6 mb-4">
+    <div class="br-card" style="border: 1px solid #ccc; border-radius: 4px; padding: 16px;">
+      <div class="card-header"><h3 class="m-0">Campos de Entrada</h3></div>
+      <div class="card-body">
+        <div class="br-input mb-3">
+          <label for="input-demo">Campo Padrão</label>
+          <input id="input-demo" type="text" placeholder="Digite algo...">
+        </div>
+        <div class="br-input state-danger mb-3">
+          <label for="input-danger">Campo com Erro</label>
+          <input id="input-danger" type="text" placeholder="Entrada inválida...">
+          <p class="feedback danger"><i class="fas fa-exclamation-circle"></i> Este campo contém um erro.</p>
+        </div>
+        <div class="br-input mb-3">
+          <label for="input-disabled">Campo Desabilitado</label>
+          <input id="input-disabled" type="text" placeholder="Não editável..." disabled>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

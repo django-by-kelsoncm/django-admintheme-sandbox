@@ -1,0 +1,18 @@
+{% load i18n static %}
+{% if cl.search_fields %}
+<div class="search-bar">
+    <div class="br-input">
+        <form id="changelist-search" method="get" role="search">
+            <input type="search"  name="{{ search_var }}" value="{{ cl.query }}"
+                placeholder="Buscar nesta listagem" aria-labelledby="button-input-search" aria-label="Buscar nesta listagem" autocomplete="off"
+                {% if cl.search_help_text %} aria-describedby="searchbar_helptext"{% endif %} />
+            <button class="br-button" type="button" aria-label="Buscar">
+                <i class="fas fa-search" aria-hidden="true"></i>
+            </button>
+        </form>
+    </div>
+    <button class="br-button circle" type="button" data-dismiss="search" aria-label="{% translate 'Search' %}">
+        <i class="fas fa-times" aria-hidden="true"></i>
+    </button>
+</div>
+{% endif %}

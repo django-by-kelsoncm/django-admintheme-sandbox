@@ -1,0 +1,65 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "django-admintheme-sandbox"
+version = "0.1.0"
+description = "Pacote de tema administrativo Django sandbox"
+readme = "README.md"
+authors = [
+    {name = "Kelson da Costa Medeiros", email = "kelsoncm@gmail.com"}
+]
+license = {text = "MIT License"}
+requires-python = ">=3.12"
+classifiers = [
+    "Environment :: Web Environment",
+    "Framework :: Django",
+    "Framework :: Django :: 6.0",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+]
+keywords = ["django", "admintheme", "sandbox", "theme"]
+dependencies = [
+    "django>=6.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/kelsoncm/django-admintheme-sandbox"
+Repository = "https://github.com/kelsoncm/django-admintheme-sandbox"
+"Bug Tracker" = "https://github.com/kelsoncm/django-admintheme-sandbox/issues"
+
+[tool.setuptools]
+packages = {find = {where = ["src"], include = ["admintheme_sandbox*"]}}
+package-dir = {"" = "src"}
+include-package-data = true
+
+[tool.setuptools.package-data]
+"*" = ["*.html", "*.css", "*.js", "*.png", "*.jpg", "*.gif", "*.svg", "*.ico", "*.scss"]
+
+[dependency-groups]
+dev = [
+    "django-import-export>=4.4.1",
+    "django-extensions>=4.1",
+    "pre-commit>=4.6.0",
+    "black>=26.3.1",
+    "ruff>=0.15.11",
+    "doc8>=2.0.0",
+    "pytest>=9.0.3",
+    "pytest-cov>=7.1.0",
+    "python-dotenv>=1.2.2",
+    "pytest-coverage-gate>=1.0.3",
+    "responses>=0.26.0",
+    "django-compressor>=4.6.0",
+    "pillow>=12.2.0",
+    "django-libsass>=0.9",
+    "libsass>=0.23.0",
+]

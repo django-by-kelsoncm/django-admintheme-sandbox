@@ -1,0 +1,124 @@
+import pytest
+from django.conf import settings
+from django.test import RequestFactory, override_settings
+from django.urls import path
+from admintheme_sandbox.context_processors import layout_settings
+
+
+def dummy_view(request):
+    return None
+
+
+urlpatterns = [
+    path("logout/", dummy_view, name="logout"),
+    path("buscar/", dummy_view, name="site_search"),
+    path("buscar/autocomplete/", dummy_view, name="site_index_autocomplete"),
+]
+
+
+@pytest.fixture(autouse=True)
+def setup_django():
+    if not settings.configured:
+        settings.configure(
+            SECRET_KEY="test-secret-key",
+            ROOT_URLCONF=__name__,
+            PROJECT_COMPANY="Minha empresa",
+            PROJECT_TITLE="Nome do projeto",
+            PROJECT_SUBTITLE="Slogan do projeto",
+            INSTALLED_APPS=[
+                "django.contrib.admin",
+                "django.contrib.auth",
+                "django.contrib.contenttypes",
+                "django.contrib.sessions",
+                "django.contrib.messages",
+            ],
+            TEMPLATES=[
+                {
+                    "BACKEND": "django.template.backends.django.DjangoTemplates",
+                    "DIRS": [],
+                    "APP_DIRS": True,
+                }
+            ],
+        )
+    import django
+
+    django.setup()
+
+
+@pytest.fixture
+def request_with_user():
+    from django.contrib.auth.models import AnonymousUser
+
+    rf = RequestFactory()
+    request = rf.get("/")
+    request.user = AnonymousUser()
+    return request
+
+
+def test_search_not_active(request_with_user):
+    with override_settings(ADMINTHEME_SANDBOX_HEADER={"search": {"ativo": False}}):
+        context = layout_settings(request_with_user)
+        search_ctx = context["admintheme_sandbox"]["header"]["search"]
+        assert search_ctx["ativo"] is False
+        assert search_ctx["show"] is False
+        assert search_ctx["url"] == ""
+
+
+def test_search_active_but_no_reverse_match(request_with_user):
+    with override_settings(
+        ROOT_URLCONF=__name__,
+        ADMINTHEME_SANDBOX_HEADER={"search": {"ativo": True, "view_name": "non_existent_view"}},
+    ):
+        context = layout_settings(request_with_user)
+        search_ctx = context["admintheme_sandbox"]["header"]["search"]
+        assert search_ctx["ativo"] is True
+        assert search_ctx["show"] is False
+        assert search_ctx["url"] == ""
+
+
+def test_search_active_with_reverse_match(request_with_user):
+    with override_settings(
+        ROOT_URLCONF=__name__,
+        ADMINTHEME_SANDBOX_HEADER={
+            "search": {
+                "ativo": True,
+                "view_name": "site_search",
+                "autocomplete": {"ativo": True, "view_name": "site_index_autocomplete"},
+            }
+        },
+    ):
+        context = layout_settings(request_with_user)
+        search_ctx = context["admintheme_sandbox"]["header"]["search"]
+        assert search_ctx["ativo"] is True
+        assert search_ctx["show"] is True
+        assert search_ctx["url"] == "/buscar/"
+
+        autocomplete_ctx = search_ctx["autocomplete"]
+        assert autocomplete_ctx["ativo"] is True
+        assert autocomplete_ctx["show"] is True
+        assert autocomplete_ctx["url"] == "/buscar/autocomplete/"
+
+
+def test_autocomplete_disabled(request_with_user):
+    with override_settings(
+        ROOT_URLCONF=__name__,
+        ADMINTHEME_SANDBOX_HEADER={
+            "search": {
+                "ativo": True,
+                "view_name": "site_search",
+                "autocomplete": {
+                    "ativo": False,
+                    "view_name": "site_index_autocomplete",
+                },
+            }
+        },
+    ):
+        context = layout_settings(request_with_user)
+        search_ctx = context["admintheme_sandbox"]["header"]["search"]
+        assert search_ctx["ativo"] is True
+        assert search_ctx["show"] is True
+
+        autocomplete_ctx = search_ctx["autocomplete"]
+        assert autocomplete_ctx["ativo"] is False
+        assert autocomplete_ctx["show"] is False
+        assert autocomplete_ctx["url"] == ""
