@@ -211,10 +211,10 @@ export default class Checkgroup {
    */
   _setParentCheckboxLabel() {
     if (this.parent.checked && !this.parent.indeterminate) {
-      this.parent.nextElementSibling.innerHTML = this.uncheckedLabel
+      this.parent.nextElementSibling.textContent = this.uncheckedLabel
       this.parent.setAttribute('aria-label', this.uncheckedLabel)
     } else {
-      this.parent.nextElementSibling.innerHTML = this.checkedLabel
+      this.parent.nextElementSibling.textContent = this.checkedLabel
       this.parent.setAttribute('aria-label', this.checkedLabel)
     }
   }
