@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "django-admintheme-sandbox"
-version = "0.1.0"
+version = "0.1.1"
 description = "Pacote de tema administrativo Django sandbox"
 readme = "README.md"
 authors = [

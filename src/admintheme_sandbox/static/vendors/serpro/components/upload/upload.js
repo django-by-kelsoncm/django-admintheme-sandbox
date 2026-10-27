@@ -302,7 +302,7 @@ class BRUpload {
     this._fileList.appendChild(li)
     const info = document.createElement('div')
     info.className = 'content'
-    info.innerHTML = this._fileArray[position].name
+    info.textContent = this._fileArray[position].name
     this._alertAddItemA11y(info, this._fileArray[position].name)
     const tooltip = document.createElement('div')
     tooltip.classList.add('br-tooltip')
@@ -312,7 +312,7 @@ class BRUpload {
     const textTooltip = document.createElement('span')
     textTooltip.classList.add('text')
     textTooltip.setAttribute('role', 'tooltip')
-    textTooltip.innerHTML = this._fileArray[position].name
+    textTooltip.textContent = this._fileArray[position].name
 
     tooltip.appendChild(textTooltip)
     li.appendChild(info)
@@ -325,7 +325,7 @@ class BRUpload {
     const btndel = document.createElement('button')
     const spanSize = document.createElement('span')
     spanSize.className = 'mr-1'
-    spanSize.innerHTML = this._calcSize(this._fileArray[position].size)
+    spanSize.textContent = this._calcSize(this._fileArray[position].size)
 
     del.appendChild(spanSize)
     btndel.className = 'br-button'
